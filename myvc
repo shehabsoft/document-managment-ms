@@ -1,0 +1,30 @@
+
+entity Member {
+    firstName String required
+    lastName String required
+    civilId String required
+    birthDate Instant required
+    email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    phone  String required
+    address1 String required
+    address2 String 
+    city String
+    country String
+	salary Double 
+    
+}
+entity MemberFiles
+{
+  fileName  String required
+  fileType  String required
+  fileContent Blob  required
+}
+
+relationship OneToMany {
+	Member {memberFiles} to MemberFiles
+}
+paginate all with pagination
+dto * with mapstruct
+service all with serviceImpl
+
+ 

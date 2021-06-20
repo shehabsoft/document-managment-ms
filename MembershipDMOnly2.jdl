@@ -1,0 +1,156 @@
+entity Member {
+    MemberId Long required
+    FirstName String required
+    LastName String required
+    FirstNameEn String 
+    LastNameEn String 
+    Gender Gender required
+    Civilid String required
+    SyndicateId Long required
+    SpecializationId Long required
+    ScientificDegreeId Long required
+    SpecializationRankId Long required
+    MembershipStatusId Long required
+    Email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+    Phone String required
+    AddressLine1 String required
+    AddressLine2 String
+    CityID String required
+    CountryID String required
+}
+
+enum Gender {
+    Male, Female
+}
+entity Syndicate {
+    SyndicateId Long required
+    SyndicateCode String required
+    SyndicateName String required
+    SyndicateNameEn String
+}
+
+entity SubSyndicate {
+    SyndicateId Long required
+    SyndicateCode String required
+    SyndicateName String required
+    SyndicateNameEn String
+}
+entity Specialization {
+    SpecializationId Long required
+    SyndicateId Long required
+    SpecializationCode String required
+    SpecializationName String required
+    SpecializationNameEn String required
+    CodeMapping String required
+}
+
+entity MemberSpecialization {
+    MemberID Long required
+    SpecializationId String required
+    SpecializationDate Instant required
+    IsActive Boolean required
+}
+entity SpecializationRank {
+    SpecializationRankId Long required
+    SyndicateId Long required
+    SpecializationRankCode String required
+    SpecializationRankName String required
+    SpecializationRankNameEn String required
+    CodeMapping String required
+}
+entity MemberSpecializationRank {
+    MemberID Long required
+    SpecializationId String required
+    SpecializationRankId String required
+    SpecializationRankDate Instant required
+    IsActive Boolean required
+}
+entity ScientificDegree {
+    ScientificDegreeId Long required
+    ScientificDegreeCode String required
+    ScientificDegreeName String required
+    SpecializationNameEn String required
+    CodeMapping String required
+}
+
+entity MemberScientificDegree {
+    MemberID Long required
+    ScientificDegreeId String required
+    ScientificDegreeDate Instant required
+    IsActive Boolean required
+}
+
+entity MembershipStatus {
+    MembershipStatusId Long required
+    SyndicateId Long required
+    MembershipStatusCode String required
+    MembershipStatusName String required
+    MembershipStatusNameEn String required
+    CodeMapping String required
+}
+
+entity MemberStatus {
+    MemberID Long required
+    MembershipStatusId Long required
+    MembershipStatusDate Instant required
+    IsActive Boolean required
+}
+entity CustomCodeName {
+    CustomCodenameId Long required
+    CodeName String required
+    CodeNameENG String
+}
+
+entity CustomCode {
+    CustomCodenameId Long required
+    CustomCodeId Long required
+    CodeValue String required
+    CodeString String required
+    CodeStringENG String
+    IsActive Boolean required
+}
+
+entity MemberCustomCode {
+    MemberID Long required
+    CustomCodeId String required
+    CustomCodeDate Instant required
+    IsActive Boolean required
+}
+
+entity Contact {
+    ContactId Long required
+    ContactTypeCode String required
+    MemberID Long required
+    Contact String required
+    StatusCodeID Long required
+}
+
+
+ 
+relationship OneToMany {
+   
+   Specialization to Member{Specialization(SpecializationId) required},
+   SpecializationRank to Member{SpecializationRank(SpecializationRankId) required},
+   ScientificDegree to Member{ScientificDegree(ScientificDegreeId) required},
+   MembershipStatus to Member{MembershipStatus(MembershipStatusId) required},
+   
+   Specialization to MemberSpecialization{Specialization(SpecializationId) required},
+   SpecializationRank to MemberSpecializationRank{SpecializationRank(SpecializationRankId) required},
+   ScientificDegree to MemberScientificDegree{ScientificDegree(ScientificDegreeId) required},
+   MembershipStatus to MemberStatus{MembershipStatus(MembershipStatusId) required},
+   
+   Member to Contact{Member(MemberId) required} ,
+   Member to MemberSpecialization{Member(MemberId) required},
+   Member to MemberSpecializationRank{Member(MemberId) required},
+   Member to MemberScientificDegree{Member(MemberId) required},
+   Member to MemberCustomCode{Member(MemberId) required},
+   Member to MemberStatus{Member(MemberId) required},
+   Syndicate to Member{Syndicate(SyndicateId) required},
+   Syndicate to Specialization{Syndicate(SyndicateId) required},
+   Syndicate to SpecializationRank{Syndicate(SyndicateId) required},
+   Syndicate to MembershipStatus{Syndicate(SyndicateId) required},
+   Syndicate to CustomCodeName{Syndicate(SyndicateId) }
+  
+   
+}
+
